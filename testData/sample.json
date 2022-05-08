@@ -1,4 +1,10 @@
 [
+  { "command": "To be ignored commands" },
+  { "command": "MOVE" },
+  { "command": "LEFT" },
+  { "command": "RIGHT" },
+  { "command": "REPORT" },
+  { "command": "Valid commands after this" },
   { "command": "PLACE 0,0,NORTH" },
   { "command": "MOVE" },
   { "command": "REPORT" },
