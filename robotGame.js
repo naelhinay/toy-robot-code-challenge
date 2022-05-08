@@ -18,9 +18,6 @@ const actions = {
     if (x < 0 || y < 0 || x > table.maxX || y > table.maxY) {
       return cb('Error: invalid position');
     }
-
-    console.log('=====================');
-    console.log(`PLACE ${x},${y},${f}`);
     robot.posX = x;
     robot.posY = y;
     robot.direction = f;
@@ -56,7 +53,7 @@ const actions = {
         break;
       case 'WEST':
         if (robot.posX <= table.maxX && robot.posX > 0) {
-          robot.posY -= 1;
+          robot.posX -= 1;
         }
         moved = true;
         break;
@@ -69,7 +66,6 @@ const actions = {
       return cb('Error: robot not moved');
     }
 
-    console.log('MOVE');
     return cb(null);
   },
 
@@ -96,7 +92,6 @@ const actions = {
         break;
     }
 
-    console.log('LEFT');
     return cb(null);
   },
 
@@ -123,7 +118,6 @@ const actions = {
         break;
     }
 
-    console.log('RIGHT');
     return cb(null);
   },
 
@@ -132,11 +126,41 @@ const actions = {
       return cb('Error: robot not placed');
     }
 
-    console.log('REPORT');
     return cb(null, `Output: ${robot.posX},${robot.posY},${robot.direction}`);
+  },
+
+  checkPlaceCommand: (command) => {
+    const re = /^PLACE[ ]{1,}[0-4],[0-4],(NORTH|EAST|SOUTH|WEST)[ ]{0,}/g;
+    const isValid = re.test(command);
+
+    if (!isValid) {
+      return {
+        x: null,
+        y: null,
+        f: null,
+        isValid: false,
+      };
+    }
+    const c = command.split(' ');
+    const values = c[1].split(',');
+
+    return {
+      x: Number(values[0]),
+      y: Number(values[1]),
+      f: values[2],
+      isValid: true,
+    };
+  },
+
+  removeRobot: () => {
+    robot.posX = 0;
+    robot.posY = 0;
+    robot.placed = false;
   },
 };
 
 module.exports = {
+  table,
+  robot,
   actions,
 };

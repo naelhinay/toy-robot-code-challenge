@@ -2,11 +2,11 @@
   { "command": "PLACE 0,0,NORTH" },
   { "command": "MOVE" },
   { "command": "REPORT" },
-
+  { "command": "===========" },
   { "command": "PLACE 0,0,NORTH" },
   { "command": "LEFT" },
   { "command": "REPORT" },
-
+  { "command": "===========" },
   { "command": "PLACE 1,2,EAST" },
   { "command": "MOVE" },
   { "command": "MOVE" },
