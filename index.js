@@ -31,7 +31,7 @@ testData.forEach((data) => {
       if (isValid) {
         actions.place(x, y, f, cb);
       } else {
-        console.log(`${data.command} is not a valid command`);
+        console.log(`${data.command} [Ignored]`);
       }
 
       break;

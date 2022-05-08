@@ -6,7 +6,7 @@ describe('PLACE command', () => {
 
   test('- returns an error when direction is invalid', () => {
     const cb = (err) => {
-      expect(err).toBe('Error: invalid direction');
+      expect(err).toBe('PLACE command error, invalid direction');
     };
 
     actions.place(1, 1, 'INVALID DIRECTION', cb);
@@ -14,7 +14,7 @@ describe('PLACE command', () => {
 
   test('- returns an error when x is invalid', () => {
     const cb = (err) => {
-      expect(err).toBe('Error: invalid position');
+      expect(err).toBe('PLACE command error, invalid position');
     };
 
     actions.place(1, 5, 'NORTH', cb);
@@ -22,7 +22,7 @@ describe('PLACE command', () => {
 
   test('- returns an error when y is invalid', () => {
     const cb = (err) => {
-      expect(err).toBe('Error: invalid position');
+      expect(err).toBe('PLACE command error, invalid position');
     };
 
     actions.place(5, 1, 'NORTH', cb);
@@ -47,7 +47,7 @@ describe('LEFT command', () => {
     afterEach(() => actions.removeRobot());
     test('- returns an error `robot not placed`', () => {
       const cb = (err) => {
-        expect(err).toBe('Error: robot not placed');
+        expect(err).toBe('LEFT command error, robot not placed');
       };
 
       actions.left(cb);
@@ -116,7 +116,7 @@ describe('RIGHT command', () => {
 
     test('- returns an error `robot not placed`', () => {
       const cb = (err) => {
-        expect(err).toBe('Error: robot not placed');
+        expect(err).toBe('RIGHT command error, robot not placed');
       };
 
       actions.right(cb);
@@ -186,7 +186,7 @@ describe('MOVE command', () => {
 
     test('- returns an error `robot not placed`', () => {
       const cb = (err) => {
-        expect(err).toBe('Error: robot not placed');
+        expect(err).toBe('MOVE command error, robot not placed');
       };
 
       actions.move(cb);
@@ -199,7 +199,8 @@ describe('MOVE command', () => {
 
     test('- will not move, when x = 0 and facing WEST', () => {
       const cb = (err) => {
-        expect(err).toBeFalsy();
+        expect(err).toBeTruthy();
+        expect(err).toBe('Falling off the table prevented, robot not moved');
         expect(robot.posX).toBe(0);
         expect(robot.direction).toBe('WEST');
       };
@@ -214,7 +215,8 @@ describe('MOVE command', () => {
 
     test('- will not move, when y = 0 and facing SOUTH', () => {
       const cb = (err) => {
-        expect(err).toBeFalsy();
+        expect(err).toBeTruthy();
+        expect(err).toBe('Falling off the table prevented, robot not moved');
         expect(robot.posY).toBe(0);
         expect(robot.direction).toBe('SOUTH');
       };
@@ -229,7 +231,8 @@ describe('MOVE command', () => {
 
     test('- will not move, when y = maxValue and facing NORTH', () => {
       const cb = (err) => {
-        expect(err).toBeFalsy();
+        expect(err).toBeTruthy();
+        expect(err).toBe('Falling off the table prevented, robot not moved');
         expect(robot.posY).toBe(table.maxY);
         expect(robot.direction).toBe('NORTH');
       };
@@ -244,7 +247,8 @@ describe('MOVE command', () => {
 
     test('- will not move, when x = maxValue and facing EAST', () => {
       const cb = (err) => {
-        expect(err).toBeFalsy();
+        expect(err).toBeTruthy();
+        expect(err).toBe('Falling off the table prevented, robot not moved');
         expect(robot.posX).toBe(table.maxX);
         expect(robot.direction).toBe('EAST');
       };

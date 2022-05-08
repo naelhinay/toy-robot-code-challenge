@@ -12,11 +12,11 @@ const robot = {
 const actions = {
   place: (x, y, f, cb) => {
     if (!allowedDirections.includes(f)) {
-      return cb('Error: invalid direction');
+      return cb('PLACE command error, invalid direction');
     }
 
     if (x < 0 || y < 0 || x > table.maxX || y > table.maxY) {
-      return cb('Error: invalid position');
+      return cb('PLACE command error, invalid position');
     }
     robot.posX = x;
     robot.posY = y;
@@ -28,7 +28,7 @@ const actions = {
 
   move: (cb) => {
     if (!robot.placed) {
-      return cb('Error: robot not placed');
+      return cb('MOVE command error, robot not placed');
     }
 
     let moved = false;
@@ -36,26 +36,26 @@ const actions = {
       case 'NORTH':
         if (robot.posY >= 0 && robot.posY < table.maxY) {
           robot.posY += 1;
+          moved = true;
         }
-        moved = true;
         break;
       case 'SOUTH':
         if (robot.posY <= table.maxY && robot.posY > 0) {
           robot.posY -= 1;
+          moved = true;
         }
-        moved = true;
         break;
       case 'EAST':
         if (robot.posX >= 0 && robot.posX < table.maxX) {
           robot.posX += 1;
+          moved = true;
         }
-        moved = true;
         break;
       case 'WEST':
         if (robot.posX <= table.maxX && robot.posX > 0) {
           robot.posX -= 1;
+          moved = true;
         }
-        moved = true;
         break;
       default:
         // do nothing;
@@ -63,7 +63,7 @@ const actions = {
     }
 
     if (!moved) {
-      return cb('Error: robot not moved');
+      return cb('Falling off the table prevented, robot not moved');
     }
 
     return cb(null);
@@ -71,7 +71,7 @@ const actions = {
 
   left: (cb) => {
     if (!robot.placed) {
-      return cb('Error: robot not placed');
+      return cb('LEFT command error, robot not placed');
     }
 
     switch (robot.direction) {
@@ -97,7 +97,7 @@ const actions = {
 
   right: (cb) => {
     if (!robot.placed) {
-      return cb('Error: robot not placed');
+      return cb('RIGHT command error, robot not placed');
     }
 
     switch (robot.direction) {
@@ -123,7 +123,7 @@ const actions = {
 
   report: (cb) => {
     if (!robot.placed) {
-      return cb('Error: robot not placed');
+      return cb('REPORT command error, robot not placed');
     }
 
     return cb(null, `Output: ${robot.posX},${robot.posY},${robot.direction}`);
